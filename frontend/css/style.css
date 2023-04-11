@@ -1,0 +1,152 @@
+.sidebar {
+    height: 100vh;
+    background-color: #8981d7;
+
+}
+
+.user-image {
+    background-color: #6b62bf;
+}
+
+.image-line {
+    width: 50%;
+    height: 8px;
+    background-color: #aaa6b5;
+    border-radius: 5px;
+  
+}
+
+.social-media {
+    position: absolute;
+    top: 90%;
+}
+
+.overview-section {
+    color: #eeeef4;
+}
+
+
+
+.overview-section a{
+    text-decoration: none;
+    color: #eeeef4;
+    margin-left: 14px;
+    font-size: 18px;
+    padding-bottom: 3px;
+}
+
+.overview-section a:hover {
+    border-bottom: 2px solid rgb(232, 228, 228) ;
+}
+
+.top-buttons {
+    background-color: #ffffff;
+}
+
+.top-buttons:hover {
+    background-color: #6b62bf;
+    color: #ffffff !important;
+}
+.add-button {
+    position: absolute;
+    left:88%
+}
+
+.new-note {
+    height:28vh;
+    overflow: hidden;
+    
+}
+
+.new-note:hover>.buttons {
+    visibility:visible;
+}
+
+.new-note:hover {
+    transform: scale(1.1);
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.discription {
+    height: 50% !important;
+    line-height: 22px;
+    font-size: 14px;
+}
+
+.date {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.buttons {
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.date {
+    position: absolute;
+    top: 82%;
+}
+
+#notes-container {
+    padding-top: 40px;
+    height: 77.7vh;
+    overflow-y: scroll;
+}
+
+
+/*<!--Add note page starts here-->*/
+
+
+#add-notes-page {
+   position: fixed;
+   top: 10%;
+   height: 87vh;
+   width: 100%;
+   
+
+}
+
+.input-button {
+
+    outline: none;
+    border: none;
+    cursor: pointer;
+    
+}
+
+.operations-buttons {
+    position:absolute;
+    top: 90%;
+    left: 75%;
+    
+}
+
+.hide {
+    display: none !important;
+    z-index: 0 !important;
+}
+
+#confirmation-page {
+    position: fixed;
+   top: 10%;
+   height: 87vh;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+}
+
+.confirmation-image {
+    height: 80px;
+}
