@@ -14,6 +14,7 @@ const crossButton = document.getElementById('cross-button');
 const addButton = document.getElementById('add-button');
 const newNote = document.getElementsByClassName('new-note');
 const dot = document.getElementsByClassName('dot');
+const confirmationMessage = document.getElementById('confirmation-message');
 
 let noteType;
 let ids;
@@ -43,6 +44,7 @@ async function confirmUpdates() {
   mainPage.classList.add('hide');
   addButton.classList.remove('hide');
   confirmUpdate.classList.add('hide');
+  confirmationMessage.innerHTML = "Your Notes have been Updated successfully";
   confirmationPage.classList.remove('hide');
   for(let i = 0; i <messageCheckbox.length; i++) {
     if(messageCheckbox[i].checked) {
@@ -76,22 +78,7 @@ function addNewNote() {
     newNotePage.classList.remove('hide')
 }
 
-function dateValidator(date) {
-  const dateNow = new Date();
-  const hour = dateNow.getHours() - date.getHours();
-  const min = dateNow.getMinutes() - date.getMinutes();
-  const second = dateNow.getSeconds() - date.getSeconds() ;
-  if(min < 1) {
-    dateValue = second + " second ago";
-  }
-  else if(hour < 1) {
-    dateValue = min + " min ago";
-  }
-  else {
-    dateValue = hour + " hours ago"
-  }
 
-}
 
 
 
@@ -125,13 +112,41 @@ function fetchAllNotes() {
     });
 }
 
-function  typeValidator(type, i) {
-  
 
+function dateValidator(date) {
+  const dateNow = new Date();
+  let day = dateNow.getDate() - date.getDate();
+  if(day<0) {
+    day = 30 + dateNow.getDate() -  date.getDate();
+  }
+  console.log(day);
+  let hour = dateNow.getHours() - date.getHours();
+  let min = dateNow.getMinutes() - date.getMinutes();
+  if(min < 0) {
+    min = 60 + dateNow.getMinutes() - date.getMinutes();
+  }
+  let second = dateNow.getSeconds() - date.getSeconds() ;
+  if(second < 0) {
+    second = 60 + dateNow.getMinutes() - date.getMinutes();
+  }
+  if(day>1) {
+    dateValue = day + "days ago"
+  }
+  else if(min < 1) {
+    dateValue = second + " second ago";
+  }
+  else if(hour < 1) {
+    dateValue = min + " min ago";
+  }
+  else {
+    dateValue = hour + " hours ago"
+  }
+
+}
+
+function  typeValidator(type, i) {
   if(type === 'Project') {
-    
-     dot[i].style.backgroundColor = "#ebe539";
-     
+     dot[i].style.backgroundColor = "#ebe539"; 
   }
   else if(type === 'Business') {
     dot[i].style.backgroundColor = "red";
@@ -190,6 +205,7 @@ function  typeValidator(type, i) {
         notesContainer.innerHTML = "";
         fetchAllNotes();
         inputTitle.value = "";
+        confirmationMessage.innerHTML = "Your Notes have been Created successfully";
         inputDiscription.value = "";
         mainPage.classList.add('hide');
         confirmationPage.classList.remove('hide');
@@ -214,7 +230,7 @@ function cancelOperation() {
 }
 
 async function deleteNote(id,title,discription,i) {
-
+ console.log(id)
   mainPage.classList.add('hide');
   newNotePage.classList.remove('hide');
   confirmationPage.classList.add('hide')
@@ -234,9 +250,11 @@ async function deleteNote(id,title,discription,i) {
 
 
 async function confirmDeletes() {
+
   newNotePage.classList.add('hide');
   mainPage.classList.add('hide');
   confirmationPage.classList.remove('hide');
+  confirmationMessage.innerHTML = "Your Notes have been Deleted successfully";
   addButton.classList.remove('hide');
   confirmDelete.classList.add('hide');
   await fetch(`http://localhost:8000/note/${ids}`, {
@@ -254,7 +272,6 @@ async function confirmDeletes() {
 
 
 function getAllProject() {
-  
   for(let i= 0; i < newNote.length; i++) {
     if (newNote[i].firstElementChild.innerHTML === "Business" || newNote[i].firstElementChild.innerHTML === "Personal") {
       newNote[i].classList.add('d-none');
@@ -266,9 +283,7 @@ function getAllProject() {
 }
 
 function getAllBusiness() {
-  
   for(let i= 0; i < newNote.length; i++) {
-
     if (newNote[i].firstElementChild.innerHTML === "Project" || newNote[i].firstElementChild.innerHTML === "Personal") {
       newNote[i].classList.add('d-none');
     }

@@ -52,6 +52,11 @@
     left:88%
 }
 
+#all-button:hover {
+ background-color: #ffffff!important;
+ color: #0f0f11 !important;
+}
+
 .new-note {
     height:28vh;
     overflow: hidden;
