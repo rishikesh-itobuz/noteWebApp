@@ -7,7 +7,7 @@ router.post("/note", (req, res) => {
     try {
       note.save().then((data) => {
         res.status(200).send({
-          message:"Note added Successfully",
+          message: "Note added Successfully",
           data
         });
      
@@ -15,7 +15,7 @@ router.post("/note", (req, res) => {
     } catch (err) {
       res.status(400).send({
         data:null,
-        message:"Note cant be added",
+        message: "Note cant be added",
         err
       });
     }
@@ -25,7 +25,7 @@ router.post("/note", (req, res) => {
     try {
       NotesData.find({}).then((data) => {
         res.status(200).send({
-          message:"created successfully",
+          message: "Created successfully",
           data
         });
         
@@ -33,7 +33,7 @@ router.post("/note", (req, res) => {
     } catch (err) {
       res.status(400).send({
         data:null,
-        message:"Note cant be created",
+        message: "Note cant be created",
         err
       });
     }
@@ -41,11 +41,10 @@ router.post("/note", (req, res) => {
   
   router.put("/note/:id", (req, res) => {
     try {
-  
       NotesData.findByIdAndUpdate({ _id: req.params.id }, { heading: req.body.heading, discription: req.body.discription },{ new: true }
       ).then((data) => {
         res.status(200).send({
-          message:"Updated successfully",
+          message: "Updated successfully",
           data
         });
        
@@ -53,7 +52,7 @@ router.post("/note", (req, res) => {
     } catch (err) {
       res.status(400).send({
         data:null,
-        message:"Note cant be Updated",
+        message: "Note cant be Updated",
         err
       });
     }
@@ -64,15 +63,15 @@ router.post("/note", (req, res) => {
       NotesData.findByIdAndRemove({ _id: req.params.id }, { new: true }).then(
         (data) => {
           res.status(200).send({
-             message:"Deleted Successfully",
+             message: "Deleted Successfully",
              data
           });
         }
       );
     } catch (err) {
       res.status(400).send({
-        data:null,
-        message:"Note cant be deleted",
+        data: null,
+        message: "Note cant be deleted",
         err
       });
     }
