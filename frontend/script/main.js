@@ -15,6 +15,7 @@ const addButton = document.getElementById('add-button');
 const newNote = document.getElementsByClassName('new-note');
 const dot = document.getElementsByClassName('dot');
 const confirmationMessage = document.getElementById('confirmation-message');
+const zoomPage = document.getElementById('zoom-view-page');
 
 let noteType;
 let ids;
@@ -23,7 +24,6 @@ let j;
 
 function updateNote(id,title,discription,i) {
   
-  // newNote[i].classList.add('update-state');
   alertMessage.innerHTML = `<span>Update the Note </span>  `;
   alertMessage.style.color='green';
   newNotePage.classList.remove('hide');
@@ -96,7 +96,7 @@ function fetchAllNotes() {
         <div class=" buttons m-0 pt-2 d-flex justify-content-end ">
             <i class="fa-solid fa-square-pen update-button mx-1" onclick="updateNote('${json.data[i]._id}','${json.data[i].heading}','${json.data[i].discription}','${i}' )"></i>
             <i class="fa-solid fa-trash  delete-button mx-1" onclick="deleteNote('${json.data[i]._id}','${json.data[i].heading}','${json.data[i].discription}','${i}')" ></i>
-            <i class="fa-solid fa-maximize full-view  mx-1"></i>
+            <i class="fa-solid fa-maximize full-view  mx-1" onclick="viewFullNode('${json.data[i].type}','${json.data[i].date}','${json.data[i].heading}','${json.data[i].discription}')"></i>
         </div>
         <div class="d-flex">
             <div class="dot p-0 mt-2 me-1 "></div>
@@ -313,6 +313,26 @@ function getAllType(){
   }
 }
 
+function viewFullNode(type,date,title,discription) {
+  
+  mainPage.classList.add('hide');
+  zoomPage.classList.remove('hide');
+  
+  zoomPage.innerHTML = ` 
+    <div class="col-10 offset-2  px-5 ">
+        <img src="./imgs/error.webp" alt="cross-button" id="exit-full-screen" onclick="removeViewPage()">
+        <h2 class="mt-5 pt-3  view-title ">${title}</h2>
+        <p class="mt-5 view-discription">${discription} </p>
+        <p class="view-type">Type :- ${type}</p>
+        <p class="view-date">Created on :- ${date.slice(0,10)}</p>
+    </div>`
+  
+  
+}
+function removeViewPage() {
+  mainPage.classList.remove('hide');
+  zoomPage.classList.add('hide');
+}
 
 
 fetchAllNotes();
