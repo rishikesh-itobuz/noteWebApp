@@ -23,12 +23,11 @@ let j;
 
 
 function updateNote(id,title,discription,i) {
-  
   alertMessage.innerHTML = `<span>Update the Note </span>  `;
   alertMessage.style.color='green';
   newNotePage.classList.remove('hide');
   mainPage.classList.add('hide');
-  confirmationPage.classList.add('hide')
+  confirmationPage.classList.add('d-none')
   addButton.classList.add('hide');
   crossButton.classList.remove('hide');
   confirmDelete.classList.add('hide')
@@ -41,11 +40,11 @@ function updateNote(id,title,discription,i) {
 
 async function confirmUpdates() {
   newNotePage.classList.add('hide');
-  mainPage.classList.add('hide');
+  mainPage.classList.remove('hide');
   addButton.classList.remove('hide');
   confirmUpdate.classList.add('hide');
   confirmationMessage.innerHTML = "Your Notes have been Updated successfully";
-  confirmationPage.classList.remove('hide');
+  confirmationPage.classList.remove('d-none');
   for(let i = 0; i <messageCheckbox.length; i++) {
     if(messageCheckbox[i].checked) {
         noteType=messageCheckbox[i].value;
@@ -62,25 +61,18 @@ async function confirmUpdates() {
       "Content-type": "application/json; charset=UTF-8",
     },
   });
- 
   alertMessage.innerHTML = "Create a note";
   alertMessage.style.color = "#f0c808"
   inputTitle.value = "";
   inputDiscription.value = "";
   notesContainer.innerHTML = "";
-
   fetchAllNotes();
-
 };
 
 function addNewNote() {
     mainPage.classList.add('hide');
     newNotePage.classList.remove('hide')
 }
-
-
-
-
 
 
 function fetchAllNotes() {
@@ -99,11 +91,9 @@ function fetchAllNotes() {
             <i class="fa-solid fa-maximize full-view  mx-1" onclick="viewFullNode('${json.data[i].type}','${json.data[i].date}','${json.data[i].heading}','${json.data[i].discription}')"></i>
         </div>
         <div class="d-flex">
-            <div class="dot p-0 mt-2 me-1 "></div>
-            
+            <div class="dot p-0 mt-2 me-1 "></div> 
             <h4 class="title p-0 m-0">${json.data[i].heading}</h4>
         </div>
-        
         <p class=" discription overflow-hidden " style="height: 40%;"> ${json.data[i].discription}</p>
         <p class=" date p-0 m-0 ">${dateValue}</p>
      </div>`;
@@ -119,7 +109,6 @@ function dateValidator(date) {
   if(day<0) {
     day = 30 + dateNow.getDate() -  date.getDate();
   }
-  console.log(day);
   let hour = dateNow.getHours() - date.getHours();
   let min = dateNow.getMinutes() - date.getMinutes();
   if(min < 0) {
@@ -167,14 +156,14 @@ function  typeValidator(type, i) {
     if ( inputTitle.value.trim() === "" && inputDiscription.value.trim() === "" ) {
         alertMessage.innerHTML = `<span>Invalid Note </span> <i class="fa-solid fa-triangle-exclamation ms-3"></i> `;
         alertMessage.style.color='#8d0801';
-        setTimeout(()=>{
+        setTimeout(() => {
           alertMessage.innerHTML = "Create a note";
           alertMessage.style.color = "#f0c808"
         },2000)
       } 
       else if (inputTitle.value.trim() === "") {
         alertMessage.innerHTML = `<span>Please provide a valid title </span> <i class="fa-solid fa-triangle-exclamation ms-3"></i> `;
-        alertMessage.style.color='#8d0801';
+        alertMessage.style.color = '#8d0801';
         setTimeout(()=>{
           alertMessage.innerHTML = "Create a note";
           alertMessage.style.color = "#f0c808"
@@ -182,8 +171,8 @@ function  typeValidator(type, i) {
       }
        else if (inputDiscription.value.trim() === "") {
         alertMessage.innerHTML = `<span>Please add description </span> <i class="fa-solid fa-triangle-exclamation ms-3"></i> `;
-        alertMessage.style.color='#8d0801';
-        setTimeout(()=>{
+        alertMessage.style.color = '#8d0801';
+        setTimeout(() => {
           alertMessage.innerHTML = "Create a note";
           alertMessage.style.color = "#f0c808"
         },2000)
@@ -229,13 +218,13 @@ function cancelOperation() {
         newNotePage.classList.add('hide')
 }
 
-async function deleteNote(id,title,discription,i) {
+async function deleteNote(id, title, discription, i) {
  console.log(id)
   mainPage.classList.add('hide');
   newNotePage.classList.remove('hide');
-  confirmationPage.classList.add('hide')
+  confirmationPage.classList.add('d-none')
   alertMessage.innerHTML = `<span>Confirm to delete </span>  `;
-  alertMessage.style.color='#8d0801';
+  alertMessage.style.color ='#8d0801';
   addButton.classList.add('hide');
   crossButton.classList.remove('hide');
   confirmUpdate.classList.add('hide');
@@ -243,24 +232,22 @@ async function deleteNote(id,title,discription,i) {
   inputTitle.value = title;
   inputDiscription.value = discription;
   ids = id;
-  j=i;
+  j = i;
 }
 
 
 
 
 async function confirmDeletes() {
-
   newNotePage.classList.add('hide');
-  mainPage.classList.add('hide');
-  confirmationPage.classList.remove('hide');
+  mainPage.classList.remove('hide');
+  confirmationPage.classList.remove('d-none');
   confirmationMessage.innerHTML = "Your Notes have been Deleted successfully";
   addButton.classList.remove('hide');
   confirmDelete.classList.add('hide');
   await fetch(`http://localhost:8000/note/${ids}`, {
     method: "DELETE",
   });
-  
   alertMessage.innerHTML = "Create a note";
   alertMessage.style.color = "#f0c808"
   inputTitle.value = "";
@@ -269,10 +256,8 @@ async function confirmDeletes() {
   fetchAllNotes();
 
 };
-
-
 function getAllProject() {
-  for(let i= 0; i < newNote.length; i++) {
+  for(let i = 0; i < newNote.length; i++) {
     if (newNote[i].firstElementChild.innerHTML === "Business" || newNote[i].firstElementChild.innerHTML === "Personal") {
       newNote[i].classList.add('d-none');
     }
@@ -283,7 +268,7 @@ function getAllProject() {
 }
 
 function getAllBusiness() {
-  for(let i= 0; i < newNote.length; i++) {
+  for(let i = 0; i < newNote.length; i++) {
     if (newNote[i].firstElementChild.innerHTML === "Project" || newNote[i].firstElementChild.innerHTML === "Personal") {
       newNote[i].classList.add('d-none');
     }
@@ -294,12 +279,9 @@ function getAllBusiness() {
 }
 
 function getAllPersonal() {
-  
-  for(let i= 0; i < newNote.length; i++) {
-    
+  for(let i = 0; i < newNote.length; i++) {
     if (newNote[i].firstElementChild.innerHTML === "Project" || newNote[i].firstElementChild.innerHTML === "Business") {
       newNote[i].classList.add('d-none');
-      
     }
     else {
       newNote[i].classList.remove('d-none');
@@ -308,16 +290,15 @@ function getAllPersonal() {
 }
 
 function getAllType(){
-  for(let i= 0; i < newNote.length; i++) {
+  for(let i = 0; i < newNote.length; i++) {
     newNote[i].classList.remove('d-none');
   }
 }
 
-function viewFullNode(type,date,title,discription) {
-  
+function viewFullNode(type, date, title, discription) {
   mainPage.classList.add('hide');
   zoomPage.classList.remove('hide');
-  
+  notesContainer.classList.add('d-none');
   zoomPage.innerHTML = ` 
     <div class="col-10 offset-2  px-5 ">
         <img src="./imgs/error.webp" alt="cross-button" id="exit-full-screen" onclick="removeViewPage()">
@@ -326,12 +307,11 @@ function viewFullNode(type,date,title,discription) {
         <p class="view-type">Type :- ${type}</p>
         <p class="view-date">Created on :- ${date.slice(0,10)}</p>
     </div>`
-  
-  
 }
 function removeViewPage() {
   mainPage.classList.remove('hide');
   zoomPage.classList.add('hide');
+  notesContainer.classList.remove('d-none');
 }
 
 
