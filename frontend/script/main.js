@@ -22,9 +22,9 @@ let ids;
 let j;
 
 
-function updateNote(id,title,discription,i) {
+function updateNote(id, title, discription,i) {
   alertMessage.innerHTML = `<span>Update the Note </span>  `;
-  alertMessage.style.color='green';
+  alertMessage.style.color ='green';
   newNotePage.classList.remove('hide');
   mainPage.classList.add('hide');
   confirmationPage.classList.add('d-none')
@@ -47,7 +47,7 @@ async function confirmUpdates() {
   confirmationPage.classList.remove('d-none');
   for(let i = 0; i <messageCheckbox.length; i++) {
     if(messageCheckbox[i].checked) {
-        noteType=messageCheckbox[i].value;
+        noteType = messageCheckbox[i].value;
     }
 }  
   await fetch(`http://localhost:8000/note/${ids}`, {
@@ -105,30 +105,33 @@ function fetchAllNotes() {
 
 function dateValidator(date) {
   const dateNow = new Date();
-  let day = dateNow.getDate() - date.getDate();
-  if(day<0) {
-    day = 30 + dateNow.getDate() -  date.getDate();
-  }
-  let hour = dateNow.getHours() - date.getHours();
-  let min = dateNow.getMinutes() - date.getMinutes();
-  if(min < 0) {
-    min = 60 + dateNow.getMinutes() - date.getMinutes();
-  }
-  let second = dateNow.getSeconds() - date.getSeconds() ;
-  if(second < 0) {
-    second = 60 + dateNow.getMinutes() - date.getMinutes();
-  }
-  if(day>1) {
-    dateValue = day + "days ago"
-  }
-  else if(min < 1) {
-    dateValue = second + " second ago";
-  }
-  else if(hour < 1) {
-    dateValue = min + " min ago";
+  let day = dateNow.getDate() - date.getDate(); 
+  let min;
+  if(dateNow.getMinutes() >= date.getMinutes()) {
+    min = dateNow.getMinutes() - date.getMinutes()
   }
   else {
-    dateValue = hour + " hours ago"
+    min = 60 + dateNow.getMinutes() - date.getMinutes();
+  }
+  let second;
+  if (dateNow.getSeconds() >= date.getSeconds()) {
+    second = dateNow.getSeconds() - date.getSeconds();
+  }
+  else {
+    second = 60 + dateNow.getMinutes() - date.getMinutes();
+  }
+  let hour = dateNow.getHours() - date.getHours();
+  if(min < 1) {
+    dateValue = second + " second ago";
+  }
+  else if(hour < 1 && day < 1) {
+    dateValue = min + " min ago";
+  }
+  else if (hour > 1 && day < 1) {
+    dateValue = hour + " hours ago";
+  }
+  else{
+    dateValue = day +" days ago";
   }
 
 }
@@ -146,16 +149,16 @@ function  typeValidator(type, i) {
 }
 
  async function confirmAdd() {
-    for(let i = 0; i <messageCheckbox.length; i++) {
+    for(let i = 0; i < messageCheckbox.length; i++) {
         if(messageCheckbox[i].checked) {
-            noteType=messageCheckbox[i].value;
+            noteType = messageCheckbox[i].value;
         }
     }
     
   
     if ( inputTitle.value.trim() === "" && inputDiscription.value.trim() === "" ) {
         alertMessage.innerHTML = `<span>Invalid Note </span> <i class="fa-solid fa-triangle-exclamation ms-3"></i> `;
-        alertMessage.style.color='#8d0801';
+        alertMessage.style.color = '#8d0801';
         setTimeout(() => {
           alertMessage.innerHTML = "Create a note";
           alertMessage.style.color = "#f0c808"
@@ -224,7 +227,7 @@ async function deleteNote(id, title, discription, i) {
   newNotePage.classList.remove('hide');
   confirmationPage.classList.add('d-none')
   alertMessage.innerHTML = `<span>Confirm to delete </span>  `;
-  alertMessage.style.color ='#8d0801';
+  alertMessage.style.color = '#8d0801';
   addButton.classList.add('hide');
   crossButton.classList.remove('hide');
   confirmUpdate.classList.add('hide');
